@@ -57,11 +57,6 @@ model = SentenceTransformer(
 
 
 
-from IPython.core.display import HTML
-from io import BytesIO
-from base64 import b64encode
-import pinecone_text
-
 def hybrid_scale(dense, sparse, alpha: float):
     if alpha < 0 or alpha > 1:
         raise ValueError("Alpha must be between 0 and 1")
