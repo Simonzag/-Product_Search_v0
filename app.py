@@ -103,7 +103,7 @@ def img_to_file_list(imgs):
   sub_path = './' + path + '/' + 'search' + '_' + str(counter["dir_num"])
 
   # Check whether the specified path exists or not
-  isExist = os.path.exists('content'+'/'+path)
+  isExist = os.path.exists('.'+'/'+path)
     
   if not isExist:
     print("Directory does not exists")
@@ -157,9 +157,6 @@ with gr.Blocks() as demo:
         text = gr.Textbox(
             value = "ג'ינס כחול לגברים",
             label="Enter the product characteristics:",
-            #show_label=True,
-            #max_lines=1,
-            #placeholder="Enter your prompt",
         )
 
         alpha = gr.Slider(0, 1, step=0.01, label='Choose alpha:', value = 0.05)
