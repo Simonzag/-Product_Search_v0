@@ -121,7 +121,7 @@ def img_to_file_list(imgs):
 
   img_files = {'search'+str(counter["dir_num"]):[]}
   i = 0
-  curr_dir = os.getcwd()
+ 
   for img in imgs:
     img.save(sub_path+"/img_" + str(i) + ".png","PNG")
     img_files['search'+str(counter["dir_num"])].append(sub_path + '/' + 'img_'+ str(i) + ".png")
@@ -131,9 +131,9 @@ def img_to_file_list(imgs):
 
   return img_files['search'+str(counter["dir_num"]-1)]
 
+
 import gradio as gr
 from deep_translator import GoogleTranslator
-
 
 counter = {"dir_num": 1}
 img_files = {'x':[]}
