@@ -198,3 +198,54 @@ def img_to_file_list(imgs):
   counter["dir_num"]+=1
 
   return img_files['search'+str(counter["dir_num"]-1)]
+
+
+
+counter = {"dir_num": 1}
+img_files = {'x':[]}
+
+def fake_gan(text, alpha):
+    text_eng=GoogleTranslator(source='iw', target='en').translate(text)
+    imgs, descr = text_to_image(text_eng, alpha, 3)
+    img_files = img_to_file_list(imgs)
+    return img_files
+
+def fake_text(text, alpha):
+    en_text = GoogleTranslator(source='iw', target='en').translate(text)
+    img , descr = text_to_image(en_text, alpha, 3)
+    return descr
+
+
+with gr.Blocks() as demo:
+
+    with gr.Row():
+
+        text = gr.Textbox(
+            value = "ג'ינס כחול לגברים",
+            label="Enter the product characteristics:",
+        )
+
+        alpha = gr.Slider(0, 1, step=0.01, label='Choose alpha:', value = 0.05)
+
+    with gr.Row():
+        btn = gr.Button("Generate image")
+
+    with gr.Row():
+        gallery = gr.Gallery(
+            label="Generated images", show_label=False, elem_id="gallery"
+        ).style(columns=[8], rows=[2], object_fit='scale-down', height='auto')
+
+    with gr.Row():
+        selected = gr.Textbox(label="Product description: ", interactive=False, value = "-----> Description <-------",placeholder="Selected")
+
+    btn.click(fake_gan, inputs=[text, alpha], outputs=gallery)
+
+    def get_select_index(evt: gr.SelectData,text,alpha):
+        print(evt.index)
+        eng_text = fake_text(text, alpha)[evt.index]
+        #heb_text = GoogleTranslator(source='en', target='iw').translate(eng_text)
+        return eng_text
+        
+    gallery.select( fn=get_select_index, inputs=[text,alpha], outputs=selected )
+
+demo.launch(debug=True)
